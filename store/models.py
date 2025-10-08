@@ -25,6 +25,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
+    image_2 = models.ImageField(upload_to='images/', blank=True, null=True)
     slug = models.SlugField(max_length=255)
     price = models.DecimalField(max_digits=4, decimal_places=2)
     in_stock = models.BooleanField(default=True)
