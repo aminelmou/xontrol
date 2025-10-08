@@ -8,43 +8,101 @@
     <main class="pt-5">
         <div class="row g-3">
             <div class="col-md-5 col-lg-5 order-md-first bg-light">
-                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}">
-            </div>
+                <div class="col-md-5 col-lg-5 order-md-first bg-light">
+    <div class="row">
+        <div class="col-6">
+            <img class="img-fluid" alt="Product image 1" src="{{ product.image.url }}">
+        </div>
+        <div class="col-6">
+            <img class="img-fluid" alt="Product image 2" src="{{ product.image_2.url }}">
+        </div>
+    </div>
+</div>
             <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
                 <h1 class="mb-0 h4">{{ product.title }}</h1>
-                <p><span class="lead">{{ product.author }}</span> (Author)</p>
+                <p class="text-muted">{{ product.category }}</p>
                 <p>{{ product.description|slice:":355" }}...</p>
                 <div class="border">
                     <div class="col border-bottom">
                         <div class="row p-3">
-                            <div class="col-6">Hardback</div>
-                            <div class="col-6 text-end"><span class="h4 fw-bold">£{{ product.price }}</span></div>
+                            <div class="col-12">
+                                <span class="h4 fw-bold">£{{ product.price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col border-bottom">
+                        <div class="row p-3">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Select Size</label>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn btn-outline-secondary size-btn position-relative" disabled>
+                                        XS
+                                        <span class="position-absolute top-50 start-50 translate-middle text-danger" style="font-size: 1.5rem; font-weight: bold;">✕</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary size-btn position-relative" disabled>
+                                        S
+                                        <span class="position-absolute top-50 start-50 translate-middle text-danger" style="font-size: 1.5rem; font-weight: bold;">✕</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary size-btn position-relative" disabled>
+                                        M
+                                        <span class="position-absolute top-50 start-50 translate-middle text-danger" style="font-size: 1.5rem; font-weight: bold;">✕</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary size-btn position-relative" disabled>
+                                        L
+                                        <span class="position-absolute top-50 start-50 translate-middle text-danger" style="font-size: 1.5rem; font-weight: bold;">✕</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary size-btn position-relative" disabled>
+                                        XL
+                                        <span class="position-absolute top-50 start-50 translate-middle text-danger" style="font-size: 1.5rem; font-weight: bold;">✕</span>
+                                    </button>
+                                </div>
+                                <small class="text-danger mt-2 d-block">All sizes currently out of stock</small>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="row p-3">
                             <div class="col-6">
                                 <label for="select">Qty</label>
-                                <select id="select">
+                                <select id="select" class="form-select form-select-sm" disabled>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                 </select>
-
                             </div>
                             <div class="col-6 text-end">
-<button type="button" id="add-button" value="{{product.id}}" class="btn btn-secondary btn-sm">Add to basket</button></div>
+                                <button type="button" id="add-button" value="{{product.id}}" class="btn btn-secondary btn-sm" disabled>Add to basket</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
 </div>
-
+<style>
+.size-btn {
+    min-width: 60px;
+    height: 50px;
+    opacity: 0.5;
+}
+</style>
 <script>
+    // Size button selection (currently all disabled, but structure for future use)
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            // Enable add to basket button
+            document.getElementById('add-button').disabled = false;
+            document.getElementById('select').disabled = false;
+        });
+    });
+
+    // Add to basket functionality
     $(document).on('click', '#add-button', function (e) {
         e.preventDefault();
         $.ajax({
@@ -63,5 +121,4 @@
         });
     })
 </script>
-
 {% endblock %}
