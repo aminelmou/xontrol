@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = False
 
-ALLOWED_HOSTS = ['xontrol.co.uk', 'www.xontrol.co.uk']
+ALLOWED_HOSTS = ['*']
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
@@ -124,6 +124,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
